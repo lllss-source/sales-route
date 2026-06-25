@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>인천 부평2동 영업 리스트</title>
+  <style>
+    :root {
+      --bg:#f5f7fb; --card:#ffffff; --text:#111827; --muted:#6b7280;
+      --line:#e5e7eb; --naver:#03c75a; --kakao:#fee500; --drive:#2563eb;
+      --phone:#10b981; --copy:#64748b; --done:#eef2f7;
+    }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans KR',Arial,sans-serif; background:var(--bg); color:var(--text); }
+    .wrap { max-width:720px; margin:0 auto; padding:16px 14px 40px; }
+    .hero { position:sticky; top:0; z-index:20; background:rgba(245,247,251,.96); backdrop-filter:blur(8px); padding:14px 0 12px; border-bottom:1px solid var(--line); }
+    h1 { font-size:25px; margin:0 0 8px; line-height:1.25; }
+    .summary { display:flex; gap:8px; flex-wrap:wrap; font-size:17px; font-weight:800; }
+    .pill { background:white; border:1px solid var(--line); border-radius:999px; padding:8px 12px; }
+    .hint { margin:12px 0 0; color:var(--muted); font-size:15px; line-height:1.45; }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:18px; padding:17px; margin:14px 0; box-shadow:0 2px 10px rgba(15,23,42,.05); transition:.15s; }
+    .card.done { background:var(--done); opacity:.72; }
+    .card.done h2, .card.done .address { text-decoration:line-through; }
+    .topline { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:8px; }
+    .badge { display:inline-flex; align-items:center; justify-content:center; min-width:44px; height:44px; border-radius:50%; background:#111827; color:white; font-size:22px; font-weight:900; }
+    .checkline { display:flex; align-items:center; gap:9px; font-size:19px; font-weight:800; }
+    input[type="checkbox"] { width:28px; height:28px; }
+    h2 { font-size:25px; margin:8px 0 8px; line-height:1.25; }
+    .address { font-size:19px; line-height:1.45; margin:0 0 6px; word-break:keep-all; }
+    .phone-text { font-size:17px; color:var(--muted); margin:0 0 12px; }
+    .buttons { display:grid; grid-template-columns:1fr; gap:10px; }
+    .btn { display:flex; align-items:center; justify-content:center; min-height:54px; border:0; border-radius:14px; padding:13px 12px; font-size:20px; font-weight:900; text-decoration:none; color:#111827; cursor:pointer; }
+    .naver { background:var(--naver); color:white; }
+    .kakao { background:var(--kakao); color:#111827; }
+    .drive { background:var(--drive); color:white; }
+    .phone { background:var(--phone); color:white; }
+    .copy { background:var(--copy); color:white; }
+    .disabled { background:#cbd5e1; color:#64748b; cursor:not-allowed; }
+    .footer-note { margin-top:18px; color:#64748b; font-size:14px; line-height:1.5; }
+    @media (min-width:560px) { .buttons { grid-template-columns:1fr 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <h1>인천 부평2동 영업 리스트</h1>
+      <div class="summary">
+        <span class="pill">전체 <span id="total">9</span>곳</span>
+        <span class="pill">완료 <span id="doneCount">0</span>곳</span>
+        <span class="pill">남음 <span id="leftCount">9</span>곳</span>
+      </div>
+      <p class="hint">위에서 아래로 1번부터 누르세요. 방문 후 체크하면 회색으로 바뀌고, 새로 열어도 체크가 유지됩니다.</p>
+    </div>
+    
+      <section class="card" id="shop-1" data-index="1">
+        <div class="topline">
+          <label class="checkline">
+            <input type="checkbox" class="visit-check" data-index="1">
+            <span class="checktext">방문완료</span>
+          </label>
+          <span class="badge">1</span>
+        </div>
+        <h2>베이델리 부평쇼룸</h2>
+        <p class="address" id="addr-1">인천광역시 부평구 부평대로71번길 15 1, 2 층 베이델리 부평쇼룸</p>
+        <p class="phone-text">032-523-1112</p>
+        <div class="buttons">
+          <a class="btn naver" href="https://map.naver.com/p/search/%EB%B2%A0%EC%9D%B4%EB%8D%B8%EB%A6%AC%20%EB%B6%80%ED%8F%89%EC%87%BC%EB%A3%B8%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C71%EB%B2%88%EA%B8%B8%2015%201%2C%202%20%EC%B8%B5%20%EB%B2%A0%EC%9D%B4%EB%8D%B8%EB%A6%AC%20%EB%B6%80%ED%8F%89%EC%87%BC%EB%A3%B8" target="_blank" rel="noopener">🟢 네이버지도</a>
+          <a class="btn kakao" href="https://map.kakao.com/link/search/%EB%B2%A0%EC%9D%B4%EB%8D%B8%EB%A6%AC%20%EB%B6%80%ED%8F%89%EC%87%BC%EB%A3%B8%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C71%EB%B2%88%EA%B8%B8%2015%201%2C%202%20%EC%B8%B5%20%EB%B2%A0%EC%9D%B4%EB%8D%B8%EB%A6%AC%20%EB%B6%80%ED%8F%89%EC%87%BC%EB%A3%B8" target="_blank" rel="noopener">🟡 카카오맵</a>
+          <a class="btn drive" href="https://map.kakao.com/link/search/%EB%B2%A0%EC%9D%B4%EB%8D%B8%EB%A6%AC%20%EB%B6%80%ED%8F%89%EC%87%BC%EB%A3%B8%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C71%EB%B2%88%EA%B8%B8%2015%201%2C%202%20%EC%B8%B5%20%EB%B2%A0%EC%9D%B4%EB%8D%B8%EB%A6%AC%20%EB%B6%80%ED%8F%89%EC%87%BC%EB%A3%B8" target="_blank" rel="noopener">🚗 카카오네비/운전안내</a>
+          <a class="btn phone" href="tel:0325231112">📞 전화</a>
+          <button class="btn copy" onclick="copyAddress('1')">📋 주소복사</button>
+        </div>
+      </section>
+    
+      <section class="card" id="shop-2" data-index="2">
+        <div class="topline">
+          <label class="checkline">
+            <input type="checkbox" class="visit-check" data-index="2">
+            <span class="checktext">방문완료</span>
+          </label>
+          <span class="badge">2</span>
+        </div>
+        <h2>헨느</h2>
+        <p class="address" id="addr-2">인천광역시 부평구 부평문화로66번길 10 REINE</p>
+        <p class="phone-text">전화번호 없음</p>
+        <div class="buttons">
+          <a class="btn naver" href="https://map.naver.com/p/search/%ED%97%A8%EB%8A%90%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C66%EB%B2%88%EA%B8%B8%2010%20REINE" target="_blank" rel="noopener">🟢 네이버지도</a>
+          <a class="btn kakao" href="https://map.kakao.com/link/search/%ED%97%A8%EB%8A%90%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C66%EB%B2%88%EA%B8%B8%2010%20REINE" target="_blank" rel="noopener">🟡 카카오맵</a>
+          <a class="btn drive" href="https://map.kakao.com/link/search/%ED%97%A8%EB%8A%90%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C66%EB%B2%88%EA%B8%B8%2010%20REINE" target="_blank" rel="noopener">🚗 카카오네비/운전안내</a>
+          <button class="btn phone disabled" disabled>📞 전화 없음</button>
+          <button class="btn copy" onclick="copyAddress('2')">📋 주소복사</button>
+        </div>
+      </section>
+    
+      <section class="card" id="shop-3" data-index="3">
+        <div class="topline">
+          <label class="checkline">
+            <input type="checkbox" class="visit-check" data-index="3">
+            <span class="checktext">방문완료</span>
+          </label>
+          <span class="badge">3</span>
+        </div>
+        <h2>히어유</h2>
+        <p class="address" id="addr-3">인천광역시 부평구 부평대로38번길 24 1층</p>
+        <p class="phone-text">전화번호 없음</p>
+        <div class="buttons">
+          <a class="btn naver" href="https://map.naver.com/p/search/%ED%9E%88%EC%96%B4%EC%9C%A0%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C38%EB%B2%88%EA%B8%B8%2024%201%EC%B8%B5" target="_blank" rel="noopener">🟢 네이버지도</a>
+          <a class="btn kakao" href="https://map.kakao.com/link/search/%ED%9E%88%EC%96%B4%EC%9C%A0%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C38%EB%B2%88%EA%B8%B8%2024%201%EC%B8%B5" target="_blank" rel="noopener">🟡 카카오맵</a>
+          <a class="btn drive" href="https://map.kakao.com/link/search/%ED%9E%88%EC%96%B4%EC%9C%A0%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C38%EB%B2%88%EA%B8%B8%2024%201%EC%B8%B5" target="_blank" rel="noopener">🚗 카카오네비/운전안내</a>
+          <button class="btn phone disabled" disabled>📞 전화 없음</button>
+          <button class="btn copy" onclick="copyAddress('3')">📋 주소복사</button>
+        </div>
+      </section>
+    
+      <section class="card" id="shop-4" data-index="4">
+        <div class="topline">
+          <label class="checkline">
+            <input type="checkbox" class="visit-check" data-index="4">
+            <span class="checktext">방문완료</span>
+          </label>
+          <span class="badge">4</span>
+        </div>
+        <h2>데이무드</h2>
+        <p class="address" id="addr-4">인천광역시 부평구 부평대로 30 부평역 지하상가 D동 71.72호</p>
+        <p class="phone-text">전화번호 없음</p>
+        <div class="buttons">
+          <a class="btn naver" href="https://map.naver.com/p/search/%EB%8D%B0%EC%9D%B4%EB%AC%B4%EB%93%9C%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%2030%20%EB%B6%80%ED%8F%89%EC%97%AD%20%EC%A7%80%ED%95%98%EC%83%81%EA%B0%80%20D%EB%8F%99%2071.72%ED%98%B8" target="_blank" rel="noopener">🟢 네이버지도</a>
+          <a class="btn kakao" href="https://map.kakao.com/link/search/%EB%8D%B0%EC%9D%B4%EB%AC%B4%EB%93%9C%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%2030%20%EB%B6%80%ED%8F%89%EC%97%AD%20%EC%A7%80%ED%95%98%EC%83%81%EA%B0%80%20D%EB%8F%99%2071.72%ED%98%B8" target="_blank" rel="noopener">🟡 카카오맵</a>
+          <a class="btn drive" href="https://map.kakao.com/link/search/%EB%8D%B0%EC%9D%B4%EB%AC%B4%EB%93%9C%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%2030%20%EB%B6%80%ED%8F%89%EC%97%AD%20%EC%A7%80%ED%95%98%EC%83%81%EA%B0%80%20D%EB%8F%99%2071.72%ED%98%B8" target="_blank" rel="noopener">🚗 카카오네비/운전안내</a>
+          <button class="btn phone disabled" disabled>📞 전화 없음</button>
+          <button class="btn copy" onclick="copyAddress('4')">📋 주소복사</button>
+        </div>
+      </section>
+    
+      <section class="card" id="shop-5" data-index="5">
+        <div class="topline">
+          <label class="checkline">
+            <input type="checkbox" class="visit-check" data-index="5">
+            <span class="checktext">방문완료</span>
+          </label>
+          <span class="badge">5</span>
+        </div>
+        <h2>그루비플로어</h2>
+        <p class="address" id="addr-5">인천광역시 부평구 부평대로 90 여산빌딩 5층 503호</p>
+        <p class="phone-text">전화번호 없음</p>
+        <div class="buttons">
+          <a class="btn naver" href="https://map.naver.com/p/search/%EA%B7%B8%EB%A3%A8%EB%B9%84%ED%94%8C%EB%A1%9C%EC%96%B4%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%2090%20%EC%97%AC%EC%82%B0%EB%B9%8C%EB%94%A9%205%EC%B8%B5%20503%ED%98%B8" target="_blank" rel="noopener">🟢 네이버지도</a>
+          <a class="btn kakao" href="https://map.kakao.com/link/search/%EA%B7%B8%EB%A3%A8%EB%B9%84%ED%94%8C%EB%A1%9C%EC%96%B4%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%2090%20%EC%97%AC%EC%82%B0%EB%B9%8C%EB%94%A9%205%EC%B8%B5%20503%ED%98%B8" target="_blank" rel="noopener">🟡 카카오맵</a>
+          <a class="btn drive" href="https://map.kakao.com/link/search/%EA%B7%B8%EB%A3%A8%EB%B9%84%ED%94%8C%EB%A1%9C%EC%96%B4%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%2090%20%EC%97%AC%EC%82%B0%EB%B9%8C%EB%94%A9%205%EC%B8%B5%20503%ED%98%B8" target="_blank" rel="noopener">🚗 카카오네비/운전안내</a>
+          <button class="btn phone disabled" disabled>📞 전화 없음</button>
+          <button class="btn copy" onclick="copyAddress('5')">📋 주소복사</button>
+        </div>
+      </section>
+    
+      <section class="card" id="shop-6" data-index="6">
+        <div class="topline">
+          <label class="checkline">
+            <input type="checkbox" class="visit-check" data-index="6">
+            <span class="checktext">방문완료</span>
+          </label>
+          <span class="badge">6</span>
+        </div>
+        <h2>썬컬렉션</h2>
+        <p class="address" id="addr-6">인천광역시 부평구 시장로 42 부평시장로타리지하242호</p>
+        <p class="phone-text">전화번호 없음</p>
+        <div class="buttons">
+          <a class="btn naver" href="https://map.naver.com/p/search/%EC%8D%AC%EC%BB%AC%EB%A0%89%EC%85%98%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EC%8B%9C%EC%9E%A5%EB%A1%9C%2042%20%EB%B6%80%ED%8F%89%EC%8B%9C%EC%9E%A5%EB%A1%9C%ED%83%80%EB%A6%AC%EC%A7%80%ED%95%98242%ED%98%B8" target="_blank" rel="noopener">🟢 네이버지도</a>
+          <a class="btn kakao" href="https://map.kakao.com/link/search/%EC%8D%AC%EC%BB%AC%EB%A0%89%EC%85%98%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EC%8B%9C%EC%9E%A5%EB%A1%9C%2042%20%EB%B6%80%ED%8F%89%EC%8B%9C%EC%9E%A5%EB%A1%9C%ED%83%80%EB%A6%AC%EC%A7%80%ED%95%98242%ED%98%B8" target="_blank" rel="noopener">🟡 카카오맵</a>
+          <a class="btn drive" href="https://map.kakao.com/link/search/%EC%8D%AC%EC%BB%AC%EB%A0%89%EC%85%98%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EC%8B%9C%EC%9E%A5%EB%A1%9C%2042%20%EB%B6%80%ED%8F%89%EC%8B%9C%EC%9E%A5%EB%A1%9C%ED%83%80%EB%A6%AC%EC%A7%80%ED%95%98242%ED%98%B8" target="_blank" rel="noopener">🚗 카카오네비/운전안내</a>
+          <button class="btn phone disabled" disabled>📞 전화 없음</button>
+          <button class="btn copy" onclick="copyAddress('6')">📋 주소복사</button>
+        </div>
+      </section>
+    
+      <section class="card" id="shop-7" data-index="7">
+        <div class="topline">
+          <label class="checkline">
+            <input type="checkbox" class="visit-check" data-index="7">
+            <span class="checktext">방문완료</span>
+          </label>
+          <span class="badge">7</span>
+        </div>
+        <h2>바래온</h2>
+        <p class="address" id="addr-7">인천광역시 부평구 부평대로71번길 15 3,4,5층 바래온</p>
+        <p class="phone-text">전화번호 없음</p>
+        <div class="buttons">
+          <a class="btn naver" href="https://map.naver.com/p/search/%EB%B0%94%EB%9E%98%EC%98%A8%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C71%EB%B2%88%EA%B8%B8%2015%203%2C4%2C5%EC%B8%B5%20%EB%B0%94%EB%9E%98%EC%98%A8" target="_blank" rel="noopener">🟢 네이버지도</a>
+          <a class="btn kakao" href="https://map.kakao.com/link/search/%EB%B0%94%EB%9E%98%EC%98%A8%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C71%EB%B2%88%EA%B8%B8%2015%203%2C4%2C5%EC%B8%B5%20%EB%B0%94%EB%9E%98%EC%98%A8" target="_blank" rel="noopener">🟡 카카오맵</a>
+          <a class="btn drive" href="https://map.kakao.com/link/search/%EB%B0%94%EB%9E%98%EC%98%A8%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C71%EB%B2%88%EA%B8%B8%2015%203%2C4%2C5%EC%B8%B5%20%EB%B0%94%EB%9E%98%EC%98%A8" target="_blank" rel="noopener">🚗 카카오네비/운전안내</a>
+          <button class="btn phone disabled" disabled>📞 전화 없음</button>
+          <button class="btn copy" onclick="copyAddress('7')">📋 주소복사</button>
+        </div>
+      </section>
+    
+      <section class="card" id="shop-8" data-index="8">
+        <div class="topline">
+          <label class="checkline">
+            <input type="checkbox" class="visit-check" data-index="8">
+            <span class="checktext">방문완료</span>
+          </label>
+          <span class="badge">8</span>
+        </div>
+        <h2>녹턴27</h2>
+        <p class="address" id="addr-8">인천광역시 부평구 부평문화로80번길 23</p>
+        <p class="phone-text">전화번호 없음</p>
+        <div class="buttons">
+          <a class="btn naver" href="https://map.naver.com/p/search/%EB%85%B9%ED%84%B427%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C80%EB%B2%88%EA%B8%B8%2023" target="_blank" rel="noopener">🟢 네이버지도</a>
+          <a class="btn kakao" href="https://map.kakao.com/link/search/%EB%85%B9%ED%84%B427%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C80%EB%B2%88%EA%B8%B8%2023" target="_blank" rel="noopener">🟡 카카오맵</a>
+          <a class="btn drive" href="https://map.kakao.com/link/search/%EB%85%B9%ED%84%B427%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C80%EB%B2%88%EA%B8%B8%2023" target="_blank" rel="noopener">🚗 카카오네비/운전안내</a>
+          <button class="btn phone disabled" disabled>📞 전화 없음</button>
+          <button class="btn copy" onclick="copyAddress('8')">📋 주소복사</button>
+        </div>
+      </section>
+    
+      <section class="card" id="shop-9" data-index="9">
+        <div class="topline">
+          <label class="checkline">
+            <input type="checkbox" class="visit-check" data-index="9">
+            <span class="checktext">방문완료</span>
+          </label>
+          <span class="badge">9</span>
+        </div>
+        <h2>브이로그</h2>
+        <p class="address" id="addr-9">인천광역시 부평구 부평문화로66번길 8 1층 브이로그</p>
+        <p class="phone-text">전화번호 없음</p>
+        <div class="buttons">
+          <a class="btn naver" href="https://map.naver.com/p/search/%EB%B8%8C%EC%9D%B4%EB%A1%9C%EA%B7%B8%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C66%EB%B2%88%EA%B8%B8%208%201%EC%B8%B5%20%EB%B8%8C%EC%9D%B4%EB%A1%9C%EA%B7%B8" target="_blank" rel="noopener">🟢 네이버지도</a>
+          <a class="btn kakao" href="https://map.kakao.com/link/search/%EB%B8%8C%EC%9D%B4%EB%A1%9C%EA%B7%B8%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C66%EB%B2%88%EA%B8%B8%208%201%EC%B8%B5%20%EB%B8%8C%EC%9D%B4%EB%A1%9C%EA%B7%B8" target="_blank" rel="noopener">🟡 카카오맵</a>
+          <a class="btn drive" href="https://map.kakao.com/link/search/%EB%B8%8C%EC%9D%B4%EB%A1%9C%EA%B7%B8%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C66%EB%B2%88%EA%B8%B8%208%201%EC%B8%B5%20%EB%B8%8C%EC%9D%B4%EB%A1%9C%EA%B7%B8" target="_blank" rel="noopener">🚗 카카오네비/운전안내</a>
+          <button class="btn phone disabled" disabled>📞 전화 없음</button>
+          <button class="btn copy" onclick="copyAddress('9')">📋 주소복사</button>
+        </div>
+      </section>
+    
+    <p class="footer-note">※ 카카오네비/운전안내 버튼은 주소 기반으로 카카오맵 운전안내 진입에 가장 가까운 화면을 엽니다. 휴대폰 환경에 따라 카카오맵 또는 브라우저가 먼저 열릴 수 있습니다.</p>
+  </div>
+  <script>
+    const storageKey = 'sales-route-v2-%EC%9D%B8%EC%B2%9C%20%EB%B6%80%ED%8F%892%EB%8F%99%20%EC%98%81%EC%97%85%20%EB%A6%AC%EC%8A%A4%ED%8A%B8-9';
+    const total = 9;
+    function loadState() {
+      let saved = {};
+      try { saved = JSON.parse(localStorage.getItem(storageKey) || '{}'); } catch(e) { saved = {}; }
+      document.querySelectorAll('.visit-check').forEach(cb => {
+        const idx = cb.dataset.index;
+        cb.checked = !!saved[idx];
+        toggleCard(idx, cb.checked);
+      });
+      updateCount();
+    }
+    function saveState() {
+      const state = {};
+      document.querySelectorAll('.visit-check').forEach(cb => { if (cb.checked) state[cb.dataset.index] = true; });
+      localStorage.setItem(storageKey, JSON.stringify(state));
+      updateCount();
+    }
+    function toggleCard(idx, done) {
+      const card = document.getElementById('shop-' + idx);
+      if (card) card.classList.toggle('done', done);
+    }
+    function updateCount() {
+      const done = document.querySelectorAll('.visit-check:checked').length;
+      document.getElementById('doneCount').textContent = done;
+      document.getElementById('leftCount').textContent = total - done;
+    }
+    document.querySelectorAll('.visit-check').forEach(cb => {
+      cb.addEventListener('change', () => { toggleCard(cb.dataset.index, cb.checked); saveState(); });
+    });
+    async function copyAddress(idx) {
+      const text = document.getElementById('addr-' + idx).innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+        alert('주소를 복사했습니다.');
+      } catch(e) {
+        const ta = document.createElement('textarea');
+        ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+        alert('주소를 복사했습니다.');
+      }
+    }
+    loadState();
+  </script>
+</body>
+</html>
