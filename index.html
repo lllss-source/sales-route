@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>인천 부평2동 영업페이지 v2</title>
+<style>
+  :root {
+    --bg:#f5f7fb;
+    --card:#ffffff;
+    --text:#111827;
+    --muted:#6b7280;
+    --naver:#03c75a;
+    --kakao:#fee500;
+    --drive:#2563eb;
+    --call:#16a34a;
+    --copy:#6b7280;
+    --done:#e5e7eb;
+    --border:#e5e7eb;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    font-size:18px;
+    line-height:1.45;
+  }
+  header {
+    position:sticky;
+    top:0;
+    z-index:10;
+    padding:16px 14px 12px;
+    background:linear-gradient(135deg,#0f766e,#1d4ed8);
+    color:white;
+    box-shadow:0 2px 10px rgba(0,0,0,.15);
+  }
+  h1 {
+    margin:0 0 6px;
+    font-size:23px;
+    font-weight:800;
+  }
+  .sub {
+    font-size:14px;
+    opacity:.95;
+  }
+  .progress-wrap {
+    margin-top:10px;
+    background:rgba(255,255,255,.25);
+    border-radius:999px;
+    overflow:hidden;
+    height:12px;
+  }
+  .progress-bar {
+    width:0%;
+    height:100%;
+    background:#fff;
+    border-radius:999px;
+    transition:width .2s ease;
+  }
+  .toolbar {
+    display:flex;
+    gap:8px;
+    padding:10px 12px;
+    background:#fff;
+    border-bottom:1px solid var(--border);
+    position:sticky;
+    top:84px;
+    z-index:9;
+  }
+  .toolbar button {
+    flex:1;
+    border:0;
+    border-radius:10px;
+    padding:11px 8px;
+    font-weight:800;
+    font-size:15px;
+    background:#111827;
+    color:#fff;
+  }
+  main {
+    padding:12px;
+    max-width:720px;
+    margin:0 auto 40px;
+  }
+  .store {
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:16px;
+    margin:12px 0;
+    box-shadow:0 2px 8px rgba(15,23,42,.06);
+  }
+  .store.done {
+    background:#f1f5f9;
+    opacity:.72;
+  }
+  .topline {
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    margin-bottom:10px;
+  }
+  .num {
+    min-width:50px;
+    height:50px;
+    border-radius:14px;
+    background:#111827;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    font-weight:900;
+  }
+  .store.done .num {
+    background:#64748b;
+  }
+  .name {
+    font-size:24px;
+    font-weight:900;
+    word-break:keep-all;
+    line-height:1.2;
+    margin-bottom:4px;
+  }
+  .addr {
+    font-size:17px;
+    color:#374151;
+    word-break:keep-all;
+    margin:10px 0 12px;
+  }
+  .phone {
+    color:#4b5563;
+    font-size:16px;
+    margin-top:4px;
+  }
+  .done-row {
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 0 12px;
+    font-size:18px;
+    font-weight:800;
+  }
+  input[type="checkbox"] {
+    width:28px;
+    height:28px;
+  }
+  .btns {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+  .btn {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:56px;
+    border-radius:14px;
+    text-decoration:none;
+    font-size:18px;
+    font-weight:900;
+    border:0;
+    padding:12px 10px;
+    color:#111827;
+    width:100%;
+  }
+  .naver { background:var(--naver); color:white; }
+  .kakao { background:var(--kakao); color:#111827; }
+  .drive { background:var(--drive); color:white; }
+  .call { background:var(--call); color:white; }
+  .copy { background:var(--copy); color:white; }
+  .full { grid-column:1 / -1; }
+  .small-note {
+    font-size:13px;
+    color:#6b7280;
+    margin-top:8px;
+  }
+  .toast {
+    position:fixed;
+    left:50%;
+    bottom:24px;
+    transform:translateX(-50%);
+    background:#111827;
+    color:white;
+    padding:12px 18px;
+    border-radius:999px;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .2s ease;
+    z-index:99;
+    font-weight:800;
+  }
+  .toast.show { opacity:1; }
+  @media (max-width:380px) {
+    body { font-size:16px; }
+    .name { font-size:21px; }
+    .btn { font-size:16px; min-height:52px; }
+    .num { min-width:46px; height:46px; font-size:22px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>오늘 영업 리스트</h1>
+  <div class="sub">인천 부평2동 · 총 <b id="totalCount">40</b>곳 · 방문 <b id="doneCount">0</b>곳 · 남은 <b id="remainCount">40</b>곳</div>
+  <div class="progress-wrap"><div id="progressBar" class="progress-bar"></div></div>
+</header>
+<div class="toolbar">
+  <button onclick="scrollToNext()">다음 미방문</button>
+  <button onclick="resetChecks()">체크 초기화</button>
+</div>
+<main id="list"></main>
+<div id="toast" class="toast">복사됨</div>
+
+<script>
+const STORES = [{"order": 1, "name": "레드엣지", "address": "인천광역시 부평구 부평대로 7 부평역지하상가 종합2호, 3호, 13-15호", "phone": "", "naver": "https://map.naver.com/v5/search/%EB%A0%88%EB%93%9C%EC%97%A3%EC%A7%80%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%207%20%EB%B6%80%ED%8F%89%EC%97%AD%EC%A7%80%ED%95%98%EC%83%81%EA%B0%80%20%EC%A2%85%ED%95%A92%ED%98%B8%2C%203%ED%98%B8%2C%2013-15%ED%98%B8", "kakao": "https://map.kakao.com/link/search/%EB%A0%88%EB%93%9C%EC%97%A3%EC%A7%80%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%207%20%EB%B6%80%ED%8F%89%EC%97%AD%EC%A7%80%ED%95%98%EC%83%81%EA%B0%80%20%EC%A2%85%ED%95%A92%ED%98%B8%2C%203%ED%98%B8%2C%2013-15%ED%98%B8", "kakaoNavi": "https://map.kakao.com/link/search/%EB%A0%88%EB%93%9C%EC%97%A3%EC%A7%80%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%207%20%EB%B6%80%ED%8F%89%EC%97%AD%EC%A7%80%ED%95%98%EC%83%81%EA%B0%80%20%EC%A2%85%ED%95%A92%ED%98%B8%2C%203%ED%98%B8%2C%2013-15%ED%98%B8", "original": 25}, {"order": 2, "name": "부니부니", "address": "인천광역시 부평구 부평대로 7", "phone": "", "naver": "https://map.naver.com/v5/search/%EB%B6%80%EB%8B%88%EB%B6%80%EB%8B%88%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%207", "kakao": "https://map.kakao.com/link/search/%EB%B6%80%EB%8B%88%EB%B6%80%EB%8B%88%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%207", "kakaoNavi": "https://map.kakao.com/link/search/%EB%B6%80%EB%8B%88%EB%B6%80%EB%8B%88%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%207", "original": 40}, {"order": 3, "name": "레인보우 부평", "address": "인천광역시 부평구 광장로 15 지하부평역 상가 No.7", "phone": "", "naver": "https://map.naver.com/v5/search/%EB%A0%88%EC%9D%B8%EB%B3%B4%EC%9A%B0%20%EB%B6%80%ED%8F%89%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B4%91%EC%9E%A5%EB%A1%9C%2015%20%EC%A7%80%ED%95%98%EB%B6%80%ED%8F%89%EC%97%AD%20%EC%83%81%EA%B0%80%20No.7", "kakao": "https://map.kakao.com/link/search/%EB%A0%88%EC%9D%B8%EB%B3%B4%EC%9A%B0%20%EB%B6%80%ED%8F%89%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B4%91%EC%9E%A5%EB%A1%9C%2015%20%EC%A7%80%ED%95%98%EB%B6%80%ED%8F%89%EC%97%AD%20%EC%83%81%EA%B0%80%20No.7", "kakaoNavi": "https://map.kakao.com/link/search/%EB%A0%88%EC%9D%B8%EB%B3%B4%EC%9A%B0%20%EB%B6%80%ED%8F%89%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B4%91%EC%9E%A5%EB%A1%9C%2015%20%EC%A7%80%ED%95%98%EB%B6%80%ED%8F%89%EC%97%AD%20%EC%83%81%EA%B0%80%20No.7", "original": 15}, {"order": 4, "name": "오제제", "address": "인천광역시 부평구 광장로 16 부평민자역사", "phone": "", "naver": "https://map.naver.com/v5/search/%EC%98%A4%EC%A0%9C%EC%A0%9C%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B4%91%EC%9E%A5%EB%A1%9C%2016%20%EB%B6%80%ED%8F%89%EB%AF%BC%EC%9E%90%EC%97%AD%EC%82%AC", "kakao": "https://map.kakao.com/link/search/%EC%98%A4%EC%A0%9C%EC%A0%9C%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B4%91%EC%9E%A5%EB%A1%9C%2016%20%EB%B6%80%ED%8F%89%EB%AF%BC%EC%9E%90%EC%97%AD%EC%82%AC", "kakaoNavi": "https://map.kakao.com/link/search/%EC%98%A4%EC%A0%9C%EC%A0%9C%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B4%91%EC%9E%A5%EB%A1%9C%2016%20%EB%B6%80%ED%8F%89%EB%AF%BC%EC%9E%90%EC%97%AD%EC%82%AC", "original": 10}, {"order": 5, "name": "큰언니야", "address": "인천광역시 부평구 광장로 16 지하2층 78호79호189호190호", "phone": "", "naver": "https://map.naver.com/v5/search/%ED%81%B0%EC%96%B8%EB%8B%88%EC%95%BC%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B4%91%EC%9E%A5%EB%A1%9C%2016%20%EC%A7%80%ED%95%982%EC%B8%B5%2078%ED%98%B879%ED%98%B8189%ED%98%B8190%ED%98%B8", "kakao": "https://map.kakao.com/link/search/%ED%81%B0%EC%96%B8%EB%8B%88%EC%95%BC%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B4%91%EC%9E%A5%EB%A1%9C%2016%20%EC%A7%80%ED%95%982%EC%B8%B5%2078%ED%98%B879%ED%98%B8189%ED%98%B8190%ED%98%B8", "kakaoNavi": "https://map.kakao.com/link/search/%ED%81%B0%EC%96%B8%EB%8B%88%EC%95%BC%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B4%91%EC%9E%A5%EB%A1%9C%2016%20%EC%A7%80%ED%95%982%EC%B8%B5%2078%ED%98%B879%ED%98%B8189%ED%98%B8190%ED%98%B8", "original": 28}, {"order": 6, "name": "빅앤프리티", "address": "인천광역시 부평구 광장로 16 민자역사 지하2층 206호", "phone": "", "naver": "https://map.naver.com/v5/search/%EB%B9%85%EC%95%A4%ED%94%84%EB%A6%AC%ED%8B%B0%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B4%91%EC%9E%A5%EB%A1%9C%2016%20%EB%AF%BC%EC%9E%90%EC%97%AD%EC%82%AC%20%EC%A7%80%ED%95%982%EC%B8%B5%20206%ED%98%B8", "kakao": "https://map.kakao.com/link/search/%EB%B9%85%EC%95%A4%ED%94%84%EB%A6%AC%ED%8B%B0%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B4%91%EC%9E%A5%EB%A1%9C%2016%20%EB%AF%BC%EC%9E%90%EC%97%AD%EC%82%AC%20%EC%A7%80%ED%95%982%EC%B8%B5%20206%ED%98%B8", "kakaoNavi": "https://map.kakao.com/link/search/%EB%B9%85%EC%95%A4%ED%94%84%EB%A6%AC%ED%8B%B0%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B4%91%EC%9E%A5%EB%A1%9C%2016%20%EB%AF%BC%EC%9E%90%EC%97%AD%EC%82%AC%20%EC%A7%80%ED%95%982%EC%B8%B5%20206%ED%98%B8", "original": 30}, {"order": 7, "name": "예쁘다", "address": "인천광역시 부평구 광장로 16 지하2층 271호", "phone": "", "naver": "https://map.naver.com/v5/search/%EC%98%88%EC%81%98%EB%8B%A4%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B4%91%EC%9E%A5%EB%A1%9C%2016%20%EC%A7%80%ED%95%982%EC%B8%B5%20271%ED%98%B8", "kakao": "https://map.kakao.com/link/search/%EC%98%88%EC%81%98%EB%8B%A4%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B4%91%EC%9E%A5%EB%A1%9C%2016%20%EC%A7%80%ED%95%982%EC%B8%B5%20271%ED%98%B8", "kakaoNavi": "https://map.kakao.com/link/search/%EC%98%88%EC%81%98%EB%8B%A4%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B4%91%EC%9E%A5%EB%A1%9C%2016%20%EC%A7%80%ED%95%982%EC%B8%B5%20271%ED%98%B8", "original": 33}, {"order": 8, "name": "걸스온탑", "address": "인천광역시 부평구 광장로 16 부평민자역사 지하2층 334 호", "phone": "", "naver": "https://map.naver.com/v5/search/%EA%B1%B8%EC%8A%A4%EC%98%A8%ED%83%91%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B4%91%EC%9E%A5%EB%A1%9C%2016%20%EB%B6%80%ED%8F%89%EB%AF%BC%EC%9E%90%EC%97%AD%EC%82%AC%20%EC%A7%80%ED%95%982%EC%B8%B5%20334%20%ED%98%B8", "kakao": "https://map.kakao.com/link/search/%EA%B1%B8%EC%8A%A4%EC%98%A8%ED%83%91%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B4%91%EC%9E%A5%EB%A1%9C%2016%20%EB%B6%80%ED%8F%89%EB%AF%BC%EC%9E%90%EC%97%AD%EC%82%AC%20%EC%A7%80%ED%95%982%EC%B8%B5%20334%20%ED%98%B8", "kakaoNavi": "https://map.kakao.com/link/search/%EA%B1%B8%EC%8A%A4%EC%98%A8%ED%83%91%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B4%91%EC%9E%A5%EB%A1%9C%2016%20%EB%B6%80%ED%8F%89%EB%AF%BC%EC%9E%90%EC%97%AD%EC%82%AC%20%EC%A7%80%ED%95%982%EC%B8%B5%20334%20%ED%98%B8", "original": 37}, {"order": 9, "name": "제이무드온", "address": "인천광역시 부평구 광장로 30 121호", "phone": "", "naver": "https://map.naver.com/v5/search/%EC%A0%9C%EC%9D%B4%EB%AC%B4%EB%93%9C%EC%98%A8%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B4%91%EC%9E%A5%EB%A1%9C%2030%20121%ED%98%B8", "kakao": "https://map.kakao.com/link/search/%EC%A0%9C%EC%9D%B4%EB%AC%B4%EB%93%9C%EC%98%A8%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B4%91%EC%9E%A5%EB%A1%9C%2030%20121%ED%98%B8", "kakaoNavi": "https://map.kakao.com/link/search/%EC%A0%9C%EC%9D%B4%EB%AC%B4%EB%93%9C%EC%98%A8%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B4%91%EC%9E%A5%EB%A1%9C%2030%20121%ED%98%B8", "original": 11}, {"order": 10, "name": "비비", "address": "인천광역시 부평구 광장로 30 대아지하상가 167,168", "phone": "", "naver": "https://map.naver.com/v5/search/%EB%B9%84%EB%B9%84%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B4%91%EC%9E%A5%EB%A1%9C%2030%20%EB%8C%80%EC%95%84%EC%A7%80%ED%95%98%EC%83%81%EA%B0%80%20167%2C168", "kakao": "https://map.kakao.com/link/search/%EB%B9%84%EB%B9%84%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B4%91%EC%9E%A5%EB%A1%9C%2030%20%EB%8C%80%EC%95%84%EC%A7%80%ED%95%98%EC%83%81%EA%B0%80%20167%2C168", "kakaoNavi": "https://map.kakao.com/link/search/%EB%B9%84%EB%B9%84%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B4%91%EC%9E%A5%EB%A1%9C%2030%20%EB%8C%80%EC%95%84%EC%A7%80%ED%95%98%EC%83%81%EA%B0%80%20167%2C168", "original": 18}, {"order": 11, "name": "스윗도로시", "address": "인천광역시 부평구 광장로 30 109호 스윗도로시", "phone": "", "naver": "https://map.naver.com/v5/search/%EC%8A%A4%EC%9C%97%EB%8F%84%EB%A1%9C%EC%8B%9C%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B4%91%EC%9E%A5%EB%A1%9C%2030%20109%ED%98%B8%20%EC%8A%A4%EC%9C%97%EB%8F%84%EB%A1%9C%EC%8B%9C", "kakao": "https://map.kakao.com/link/search/%EC%8A%A4%EC%9C%97%EB%8F%84%EB%A1%9C%EC%8B%9C%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B4%91%EC%9E%A5%EB%A1%9C%2030%20109%ED%98%B8%20%EC%8A%A4%EC%9C%97%EB%8F%84%EB%A1%9C%EC%8B%9C", "kakaoNavi": "https://map.kakao.com/link/search/%EC%8A%A4%EC%9C%97%EB%8F%84%EB%A1%9C%EC%8B%9C%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B4%91%EC%9E%A5%EB%A1%9C%2030%20109%ED%98%B8%20%EC%8A%A4%EC%9C%97%EB%8F%84%EB%A1%9C%EC%8B%9C", "original": 36}, {"order": 12, "name": "데이룸", "address": "인천광역시 부평구 부평대로20번길 18 1층", "phone": "", "naver": "https://map.naver.com/v5/search/%EB%8D%B0%EC%9D%B4%EB%A3%B8%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C20%EB%B2%88%EA%B8%B8%2018%201%EC%B8%B5", "kakao": "https://map.kakao.com/link/search/%EB%8D%B0%EC%9D%B4%EB%A3%B8%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C20%EB%B2%88%EA%B8%B8%2018%201%EC%B8%B5", "kakaoNavi": "https://map.kakao.com/link/search/%EB%8D%B0%EC%9D%B4%EB%A3%B8%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C20%EB%B2%88%EA%B8%B8%2018%201%EC%B8%B5", "original": 14}, {"order": 13, "name": "꽃주름", "address": "인천광역시 부평구 부평문화로 20", "phone": "", "naver": "https://map.naver.com/v5/search/%EA%BD%83%EC%A3%BC%EB%A6%84%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C%2020", "kakao": "https://map.kakao.com/link/search/%EA%BD%83%EC%A3%BC%EB%A6%84%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C%2020", "kakaoNavi": "https://map.kakao.com/link/search/%EA%BD%83%EC%A3%BC%EB%A6%84%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C%2020", "original": 23}, {"order": 14, "name": "데이무드", "address": "인천광역시 부평구 부평대로 30 부평역 지하상가 D동 71.72호", "phone": "", "naver": "https://map.naver.com/v5/search/%EB%8D%B0%EC%9D%B4%EB%AC%B4%EB%93%9C%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%2030%20%EB%B6%80%ED%8F%89%EC%97%AD%20%EC%A7%80%ED%95%98%EC%83%81%EA%B0%80%20D%EB%8F%99%2071.72%ED%98%B8", "kakao": "https://map.kakao.com/link/search/%EB%8D%B0%EC%9D%B4%EB%AC%B4%EB%93%9C%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%2030%20%EB%B6%80%ED%8F%89%EC%97%AD%20%EC%A7%80%ED%95%98%EC%83%81%EA%B0%80%20D%EB%8F%99%2071.72%ED%98%B8", "kakaoNavi": "https://map.kakao.com/link/search/%EB%8D%B0%EC%9D%B4%EB%AC%B4%EB%93%9C%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%2030%20%EB%B6%80%ED%8F%89%EC%97%AD%20%EC%A7%80%ED%95%98%EC%83%81%EA%B0%80%20D%EB%8F%99%2071.72%ED%98%B8", "original": 4}, {"order": 15, "name": "히어유", "address": "인천광역시 부평구 부평대로38번길 24 1층", "phone": "", "naver": "https://map.naver.com/v5/search/%ED%9E%88%EC%96%B4%EC%9C%A0%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C38%EB%B2%88%EA%B8%B8%2024%201%EC%B8%B5", "kakao": "https://map.kakao.com/link/search/%ED%9E%88%EC%96%B4%EC%9C%A0%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C38%EB%B2%88%EA%B8%B8%2024%201%EC%B8%B5", "kakaoNavi": "https://map.kakao.com/link/search/%ED%9E%88%EC%96%B4%EC%9C%A0%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C38%EB%B2%88%EA%B8%B8%2024%201%EC%B8%B5", "original": 3}, {"order": 16, "name": "기린", "address": "인천광역시 부평구 부평대로40번길 7", "phone": "", "naver": "https://map.naver.com/v5/search/%EA%B8%B0%EB%A6%B0%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C40%EB%B2%88%EA%B8%B8%207", "kakao": "https://map.kakao.com/link/search/%EA%B8%B0%EB%A6%B0%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C40%EB%B2%88%EA%B8%B8%207", "kakaoNavi": "https://map.kakao.com/link/search/%EA%B8%B0%EB%A6%B0%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C40%EB%B2%88%EA%B8%B8%207", "original": 32}, {"order": 17, "name": "차민주컬랙션", "address": "인천광역시 부평구 부평대로 40", "phone": "", "naver": "https://map.naver.com/v5/search/%EC%B0%A8%EB%AF%BC%EC%A3%BC%EC%BB%AC%EB%9E%99%EC%85%98%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%2040", "kakao": "https://map.kakao.com/link/search/%EC%B0%A8%EB%AF%BC%EC%A3%BC%EC%BB%AC%EB%9E%99%EC%85%98%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%2040", "kakaoNavi": "https://map.kakao.com/link/search/%EC%B0%A8%EB%AF%BC%EC%A3%BC%EC%BB%AC%EB%9E%99%EC%85%98%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%2040", "original": 27}, {"order": 18, "name": "쉬즈미스", "address": "인천광역시 부평구 부평대로 43", "phone": "", "naver": "https://map.naver.com/v5/search/%EC%89%AC%EC%A6%88%EB%AF%B8%EC%8A%A4%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%2043", "kakao": "https://map.kakao.com/link/search/%EC%89%AC%EC%A6%88%EB%AF%B8%EC%8A%A4%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%2043", "kakaoNavi": "https://map.kakao.com/link/search/%EC%89%AC%EC%A6%88%EB%AF%B8%EC%8A%A4%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%2043", "original": 21}, {"order": 19, "name": "아라옷가게네이버페이", "address": "인천광역시 부평구 부평문화로65번길 20 1층", "phone": "", "naver": "https://map.naver.com/v5/search/%EC%95%84%EB%9D%BC%EC%98%B7%EA%B0%80%EA%B2%8C%EB%84%A4%EC%9D%B4%EB%B2%84%ED%8E%98%EC%9D%B4%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C65%EB%B2%88%EA%B8%B8%2020%201%EC%B8%B5", "kakao": "https://map.kakao.com/link/search/%EC%95%84%EB%9D%BC%EC%98%B7%EA%B0%80%EA%B2%8C%EB%84%A4%EC%9D%B4%EB%B2%84%ED%8E%98%EC%9D%B4%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C65%EB%B2%88%EA%B8%B8%2020%201%EC%B8%B5", "kakaoNavi": "https://map.kakao.com/link/search/%EC%95%84%EB%9D%BC%EC%98%B7%EA%B0%80%EA%B2%8C%EB%84%A4%EC%9D%B4%EB%B2%84%ED%8E%98%EC%9D%B4%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C65%EB%B2%88%EA%B8%B8%2020%201%EC%B8%B5", "original": 24}, {"order": 20, "name": "브이로그", "address": "인천광역시 부평구 부평문화로66번길 8 1층 브이로그", "phone": "", "naver": "https://map.naver.com/v5/search/%EB%B8%8C%EC%9D%B4%EB%A1%9C%EA%B7%B8%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C66%EB%B2%88%EA%B8%B8%208%201%EC%B8%B5%20%EB%B8%8C%EC%9D%B4%EB%A1%9C%EA%B7%B8", "kakao": "https://map.kakao.com/link/search/%EB%B8%8C%EC%9D%B4%EB%A1%9C%EA%B7%B8%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C66%EB%B2%88%EA%B8%B8%208%201%EC%B8%B5%20%EB%B8%8C%EC%9D%B4%EB%A1%9C%EA%B7%B8", "kakaoNavi": "https://map.kakao.com/link/search/%EB%B8%8C%EC%9D%B4%EB%A1%9C%EA%B7%B8%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C66%EB%B2%88%EA%B8%B8%208%201%EC%B8%B5%20%EB%B8%8C%EC%9D%B4%EB%A1%9C%EA%B7%B8", "original": 9}, {"order": 21, "name": "헨느", "address": "인천광역시 부평구 부평문화로66번길 10 REINE", "phone": "", "naver": "https://map.naver.com/v5/search/%ED%97%A8%EB%8A%90%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C66%EB%B2%88%EA%B8%B8%2010%20REINE", "kakao": "https://map.kakao.com/link/search/%ED%97%A8%EB%8A%90%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C66%EB%B2%88%EA%B8%B8%2010%20REINE", "kakaoNavi": "https://map.kakao.com/link/search/%ED%97%A8%EB%8A%90%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C66%EB%B2%88%EA%B8%B8%2010%20REINE", "original": 2}, {"order": 22, "name": "제이앤바이", "address": "인천광역시 부평구 부평문화로66번길 13-4 3층 제이앤바이", "phone": "", "naver": "https://map.naver.com/v5/search/%EC%A0%9C%EC%9D%B4%EC%95%A4%EB%B0%94%EC%9D%B4%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C66%EB%B2%88%EA%B8%B8%2013-4%203%EC%B8%B5%20%EC%A0%9C%EC%9D%B4%EC%95%A4%EB%B0%94%EC%9D%B4", "kakao": "https://map.kakao.com/link/search/%EC%A0%9C%EC%9D%B4%EC%95%A4%EB%B0%94%EC%9D%B4%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C66%EB%B2%88%EA%B8%B8%2013-4%203%EC%B8%B5%20%EC%A0%9C%EC%9D%B4%EC%95%A4%EB%B0%94%EC%9D%B4", "kakaoNavi": "https://map.kakao.com/link/search/%EC%A0%9C%EC%9D%B4%EC%95%A4%EB%B0%94%EC%9D%B4%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C66%EB%B2%88%EA%B8%B8%2013-4%203%EC%B8%B5%20%EC%A0%9C%EC%9D%B4%EC%95%A4%EB%B0%94%EC%9D%B4", "original": 26}, {"order": 23, "name": "햅번", "address": "인천광역시 부평구 부평문화로 68 1층", "phone": "", "naver": "https://map.naver.com/v5/search/%ED%96%85%EB%B2%88%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C%2068%201%EC%B8%B5", "kakao": "https://map.kakao.com/link/search/%ED%96%85%EB%B2%88%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C%2068%201%EC%B8%B5", "kakaoNavi": "https://map.kakao.com/link/search/%ED%96%85%EB%B2%88%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C%2068%201%EC%B8%B5", "original": 22}, {"order": 24, "name": "녹턴27", "address": "인천광역시 부평구 부평문화로80번길 23", "phone": "", "naver": "https://map.naver.com/v5/search/%EB%85%B9%ED%84%B427%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C80%EB%B2%88%EA%B8%B8%2023", "kakao": "https://map.kakao.com/link/search/%EB%85%B9%ED%84%B427%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C80%EB%B2%88%EA%B8%B8%2023", "kakaoNavi": "https://map.kakao.com/link/search/%EB%85%B9%ED%84%B427%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C80%EB%B2%88%EA%B8%B8%2023", "original": 8}, {"order": 25, "name": "사라제이 부평점", "address": "인천광역시 부평구 부평문화로 81-2", "phone": "", "naver": "https://map.naver.com/v5/search/%EC%82%AC%EB%9D%BC%EC%A0%9C%EC%9D%B4%20%EB%B6%80%ED%8F%89%EC%A0%90%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C%2081-2", "kakao": "https://map.kakao.com/link/search/%EC%82%AC%EB%9D%BC%EC%A0%9C%EC%9D%B4%20%EB%B6%80%ED%8F%89%EC%A0%90%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C%2081-2", "kakaoNavi": "https://map.kakao.com/link/search/%EC%82%AC%EB%9D%BC%EC%A0%9C%EC%9D%B4%20%EB%B6%80%ED%8F%89%EC%A0%90%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%AC%B8%ED%99%94%EB%A1%9C%2081-2", "original": 17}, {"order": 26, "name": "마드모아젤 부평점", "address": "인천광역시 부평구 시장로 21-1", "phone": "", "naver": "https://map.naver.com/v5/search/%EB%A7%88%EB%93%9C%EB%AA%A8%EC%95%84%EC%A0%A4%20%EB%B6%80%ED%8F%89%EC%A0%90%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EC%8B%9C%EC%9E%A5%EB%A1%9C%2021-1", "kakao": "https://map.kakao.com/link/search/%EB%A7%88%EB%93%9C%EB%AA%A8%EC%95%84%EC%A0%A4%20%EB%B6%80%ED%8F%89%EC%A0%90%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EC%8B%9C%EC%9E%A5%EB%A1%9C%2021-1", "kakaoNavi": "https://map.kakao.com/link/search/%EB%A7%88%EB%93%9C%EB%AA%A8%EC%95%84%EC%A0%A4%20%EB%B6%80%ED%8F%89%EC%A0%90%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EC%8B%9C%EC%9E%A5%EB%A1%9C%2021-1", "original": 12}, {"order": 27, "name": "빌리브", "address": "인천광역시 부평구 시장로 10 지하 가동 45호", "phone": "", "naver": "https://map.naver.com/v5/search/%EB%B9%8C%EB%A6%AC%EB%B8%8C%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EC%8B%9C%EC%9E%A5%EB%A1%9C%2010%20%EC%A7%80%ED%95%98%20%EA%B0%80%EB%8F%99%2045%ED%98%B8", "kakao": "https://map.kakao.com/link/search/%EB%B9%8C%EB%A6%AC%EB%B8%8C%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EC%8B%9C%EC%9E%A5%EB%A1%9C%2010%20%EC%A7%80%ED%95%98%20%EA%B0%80%EB%8F%99%2045%ED%98%B8", "kakaoNavi": "https://map.kakao.com/link/search/%EB%B9%8C%EB%A6%AC%EB%B8%8C%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EC%8B%9C%EC%9E%A5%EB%A1%9C%2010%20%EC%A7%80%ED%95%98%20%EA%B0%80%EB%8F%99%2045%ED%98%B8", "original": 13}, {"order": 28, "name": "위드민", "address": "인천광역시 부평구 시장로 10 D동71,72호", "phone": "", "naver": "https://map.naver.com/v5/search/%EC%9C%84%EB%93%9C%EB%AF%BC%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EC%8B%9C%EC%9E%A5%EB%A1%9C%2010%20D%EB%8F%9971%2C72%ED%98%B8", "kakao": "https://map.kakao.com/link/search/%EC%9C%84%EB%93%9C%EB%AF%BC%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EC%8B%9C%EC%9E%A5%EB%A1%9C%2010%20D%EB%8F%9971%2C72%ED%98%B8", "kakaoNavi": "https://map.kakao.com/link/search/%EC%9C%84%EB%93%9C%EB%AF%BC%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EC%8B%9C%EC%9E%A5%EB%A1%9C%2010%20D%EB%8F%9971%2C72%ED%98%B8", "original": 16}, {"order": 29, "name": "이프그린", "address": "인천광역시 부평구 시장로 10 나동 75, 76호", "phone": "", "naver": "https://map.naver.com/v5/search/%EC%9D%B4%ED%94%84%EA%B7%B8%EB%A6%B0%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EC%8B%9C%EC%9E%A5%EB%A1%9C%2010%20%EB%82%98%EB%8F%99%2075%2C%2076%ED%98%B8", "kakao": "https://map.kakao.com/link/search/%EC%9D%B4%ED%94%84%EA%B7%B8%EB%A6%B0%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EC%8B%9C%EC%9E%A5%EB%A1%9C%2010%20%EB%82%98%EB%8F%99%2075%2C%2076%ED%98%B8", "kakaoNavi": "https://map.kakao.com/link/search/%EC%9D%B4%ED%94%84%EA%B7%B8%EB%A6%B0%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EC%8B%9C%EC%9E%A5%EB%A1%9C%2010%20%EB%82%98%EB%8F%99%2075%2C%2076%ED%98%B8", "original": 39}, {"order": 30, "name": "썬컬렉션", "address": "인천광역시 부평구 시장로 42 부평시장로타리지하242호", "phone": "", "naver": "https://map.naver.com/v5/search/%EC%8D%AC%EC%BB%AC%EB%A0%89%EC%85%98%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EC%8B%9C%EC%9E%A5%EB%A1%9C%2042%20%EB%B6%80%ED%8F%89%EC%8B%9C%EC%9E%A5%EB%A1%9C%ED%83%80%EB%A6%AC%EC%A7%80%ED%95%98242%ED%98%B8", "kakao": "https://map.kakao.com/link/search/%EC%8D%AC%EC%BB%AC%EB%A0%89%EC%85%98%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EC%8B%9C%EC%9E%A5%EB%A1%9C%2042%20%EB%B6%80%ED%8F%89%EC%8B%9C%EC%9E%A5%EB%A1%9C%ED%83%80%EB%A6%AC%EC%A7%80%ED%95%98242%ED%98%B8", "kakaoNavi": "https://map.kakao.com/link/search/%EC%8D%AC%EC%BB%AC%EB%A0%89%EC%85%98%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EC%8B%9C%EC%9E%A5%EB%A1%9C%2042%20%EB%B6%80%ED%8F%89%EC%8B%9C%EC%9E%A5%EB%A1%9C%ED%83%80%EB%A6%AC%EC%A7%80%ED%95%98242%ED%98%B8", "original": 6}, {"order": 31, "name": "라엘", "address": "인천광역시 부평구 부평대로 69 신부평지하상가 39,71호", "phone": "", "naver": "https://map.naver.com/v5/search/%EB%9D%BC%EC%97%98%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%2069%20%EC%8B%A0%EB%B6%80%ED%8F%89%EC%A7%80%ED%95%98%EC%83%81%EA%B0%80%2039%2C71%ED%98%B8", "kakao": "https://map.kakao.com/link/search/%EB%9D%BC%EC%97%98%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%2069%20%EC%8B%A0%EB%B6%80%ED%8F%89%EC%A7%80%ED%95%98%EC%83%81%EA%B0%80%2039%2C71%ED%98%B8", "kakaoNavi": "https://map.kakao.com/link/search/%EB%9D%BC%EC%97%98%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%2069%20%EC%8B%A0%EB%B6%80%ED%8F%89%EC%A7%80%ED%95%98%EC%83%81%EA%B0%80%2039%2C71%ED%98%B8", "original": 19}, {"order": 32, "name": "어반스토리네이버페이", "address": "인천광역시 부평구 부평대로 69 부평시장역", "phone": "", "naver": "https://map.naver.com/v5/search/%EC%96%B4%EB%B0%98%EC%8A%A4%ED%86%A0%EB%A6%AC%EB%84%A4%EC%9D%B4%EB%B2%84%ED%8E%98%EC%9D%B4%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%2069%20%EB%B6%80%ED%8F%89%EC%8B%9C%EC%9E%A5%EC%97%AD", "kakao": "https://map.kakao.com/link/search/%EC%96%B4%EB%B0%98%EC%8A%A4%ED%86%A0%EB%A6%AC%EB%84%A4%EC%9D%B4%EB%B2%84%ED%8E%98%EC%9D%B4%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%2069%20%EB%B6%80%ED%8F%89%EC%8B%9C%EC%9E%A5%EC%97%AD", "kakaoNavi": "https://map.kakao.com/link/search/%EC%96%B4%EB%B0%98%EC%8A%A4%ED%86%A0%EB%A6%AC%EB%84%A4%EC%9D%B4%EB%B2%84%ED%8E%98%EC%9D%B4%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%2069%20%EB%B6%80%ED%8F%89%EC%8B%9C%EC%9E%A5%EC%97%AD", "original": 34}, {"order": 33, "name": "베이델리 부평쇼룸", "address": "인천광역시 부평구 부평대로71번길 15 1, 2 층 베이델리 부평쇼룸", "phone": "032-523-1112", "naver": "https://map.naver.com/v5/search/%EB%B2%A0%EC%9D%B4%EB%8D%B8%EB%A6%AC%20%EB%B6%80%ED%8F%89%EC%87%BC%EB%A3%B8%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C71%EB%B2%88%EA%B8%B8%2015%201%2C%202%20%EC%B8%B5%20%EB%B2%A0%EC%9D%B4%EB%8D%B8%EB%A6%AC%20%EB%B6%80%ED%8F%89%EC%87%BC%EB%A3%B8", "kakao": "https://map.kakao.com/link/search/%EB%B2%A0%EC%9D%B4%EB%8D%B8%EB%A6%AC%20%EB%B6%80%ED%8F%89%EC%87%BC%EB%A3%B8%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C71%EB%B2%88%EA%B8%B8%2015%201%2C%202%20%EC%B8%B5%20%EB%B2%A0%EC%9D%B4%EB%8D%B8%EB%A6%AC%20%EB%B6%80%ED%8F%89%EC%87%BC%EB%A3%B8", "kakaoNavi": "https://map.kakao.com/link/search/%EB%B2%A0%EC%9D%B4%EB%8D%B8%EB%A6%AC%20%EB%B6%80%ED%8F%89%EC%87%BC%EB%A3%B8%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C71%EB%B2%88%EA%B8%B8%2015%201%2C%202%20%EC%B8%B5%20%EB%B2%A0%EC%9D%B4%EB%8D%B8%EB%A6%AC%20%EB%B6%80%ED%8F%89%EC%87%BC%EB%A3%B8", "original": 1}, {"order": 34, "name": "바래온", "address": "인천광역시 부평구 부평대로71번길 15 3,4,5층 바래온", "phone": "", "naver": "https://map.naver.com/v5/search/%EB%B0%94%EB%9E%98%EC%98%A8%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C71%EB%B2%88%EA%B8%B8%2015%203%2C4%2C5%EC%B8%B5%20%EB%B0%94%EB%9E%98%EC%98%A8", "kakao": "https://map.kakao.com/link/search/%EB%B0%94%EB%9E%98%EC%98%A8%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C71%EB%B2%88%EA%B8%B8%2015%203%2C4%2C5%EC%B8%B5%20%EB%B0%94%EB%9E%98%EC%98%A8", "kakaoNavi": "https://map.kakao.com/link/search/%EB%B0%94%EB%9E%98%EC%98%A8%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C71%EB%B2%88%EA%B8%B8%2015%203%2C4%2C5%EC%B8%B5%20%EB%B0%94%EB%9E%98%EC%98%A8", "original": 7}, {"order": 35, "name": "그루비플로어", "address": "인천광역시 부평구 부평대로 90 여산빌딩 5층 503호", "phone": "", "naver": "https://map.naver.com/v5/search/%EA%B7%B8%EB%A3%A8%EB%B9%84%ED%94%8C%EB%A1%9C%EC%96%B4%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%2090%20%EC%97%AC%EC%82%B0%EB%B9%8C%EB%94%A9%205%EC%B8%B5%20503%ED%98%B8", "kakao": "https://map.kakao.com/link/search/%EA%B7%B8%EB%A3%A8%EB%B9%84%ED%94%8C%EB%A1%9C%EC%96%B4%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%2090%20%EC%97%AC%EC%82%B0%EB%B9%8C%EB%94%A9%205%EC%B8%B5%20503%ED%98%B8", "kakaoNavi": "https://map.kakao.com/link/search/%EA%B7%B8%EB%A3%A8%EB%B9%84%ED%94%8C%EB%A1%9C%EC%96%B4%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%2090%20%EC%97%AC%EC%82%B0%EB%B9%8C%EB%94%A9%205%EC%B8%B5%20503%ED%98%B8", "original": 5}, {"order": 36, "name": "바비팩토리", "address": "인천 부평구 부평동 224-1", "phone": "", "naver": "https://map.naver.com/v5/search/%EB%B0%94%EB%B9%84%ED%8C%A9%ED%86%A0%EB%A6%AC%20%EC%9D%B8%EC%B2%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8F%99%20224-1", "kakao": "https://map.kakao.com/link/search/%EB%B0%94%EB%B9%84%ED%8C%A9%ED%86%A0%EB%A6%AC%20%EC%9D%B8%EC%B2%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8F%99%20224-1", "kakaoNavi": "https://map.kakao.com/link/search/%EB%B0%94%EB%B9%84%ED%8C%A9%ED%86%A0%EB%A6%AC%20%EC%9D%B8%EC%B2%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8F%99%20224-1", "original": 35}, {"order": 37, "name": "ONE21", "address": "인천광역시 부평구 신트리로 63-15 1층", "phone": "", "naver": "https://map.naver.com/v5/search/ONE21%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EC%8B%A0%ED%8A%B8%EB%A6%AC%EB%A1%9C%2063-15%201%EC%B8%B5", "kakao": "https://map.kakao.com/link/search/ONE21%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EC%8B%A0%ED%8A%B8%EB%A6%AC%EB%A1%9C%2063-15%201%EC%B8%B5", "kakaoNavi": "https://map.kakao.com/link/search/ONE21%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EC%8B%A0%ED%8A%B8%EB%A6%AC%EB%A1%9C%2063-15%201%EC%B8%B5", "original": 20}, {"order": 38, "name": "프리스", "address": "인천광역시 부평구 신트리로8번길 23-5", "phone": "", "naver": "https://map.naver.com/v5/search/%ED%94%84%EB%A6%AC%EC%8A%A4%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EC%8B%A0%ED%8A%B8%EB%A6%AC%EB%A1%9C8%EB%B2%88%EA%B8%B8%2023-5", "kakao": "https://map.kakao.com/link/search/%ED%94%84%EB%A6%AC%EC%8A%A4%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EC%8B%A0%ED%8A%B8%EB%A6%AC%EB%A1%9C8%EB%B2%88%EA%B8%B8%2023-5", "kakaoNavi": "https://map.kakao.com/link/search/%ED%94%84%EB%A6%AC%EC%8A%A4%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EC%8B%A0%ED%8A%B8%EB%A6%AC%EB%A1%9C8%EB%B2%88%EA%B8%B8%2023-5", "original": 29}, {"order": 39, "name": "어반워크", "address": "인천광역시 부평구 부평대로 163 쌍용플래티넘 1403호", "phone": "", "naver": "https://map.naver.com/v5/search/%EC%96%B4%EB%B0%98%EC%9B%8C%ED%81%AC%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%20163%20%EC%8C%8D%EC%9A%A9%ED%94%8C%EB%9E%98%ED%8B%B0%EB%84%98%201403%ED%98%B8", "kakao": "https://map.kakao.com/link/search/%EC%96%B4%EB%B0%98%EC%9B%8C%ED%81%AC%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%20163%20%EC%8C%8D%EC%9A%A9%ED%94%8C%EB%9E%98%ED%8B%B0%EB%84%98%201403%ED%98%B8", "kakaoNavi": "https://map.kakao.com/link/search/%EC%96%B4%EB%B0%98%EC%9B%8C%ED%81%AC%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EB%B6%80%ED%8F%89%EB%8C%80%EB%A1%9C%20163%20%EC%8C%8D%EC%9A%A9%ED%94%8C%EB%9E%98%ED%8B%B0%EB%84%98%201403%ED%98%B8", "original": 31}, {"order": 40, "name": "오브", "address": "인천광역시 부평구 길주로602번길 18 1층 102호", "phone": "", "naver": "https://map.naver.com/v5/search/%EC%98%A4%EB%B8%8C%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B8%B8%EC%A3%BC%EB%A1%9C602%EB%B2%88%EA%B8%B8%2018%201%EC%B8%B5%20102%ED%98%B8", "kakao": "https://map.kakao.com/link/search/%EC%98%A4%EB%B8%8C%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B8%B8%EC%A3%BC%EB%A1%9C602%EB%B2%88%EA%B8%B8%2018%201%EC%B8%B5%20102%ED%98%B8", "kakaoNavi": "https://map.kakao.com/link/search/%EC%98%A4%EB%B8%8C%20%EC%9D%B8%EC%B2%9C%EA%B4%91%EC%97%AD%EC%8B%9C%20%EB%B6%80%ED%8F%89%EA%B5%AC%20%EA%B8%B8%EC%A3%BC%EB%A1%9C602%EB%B2%88%EA%B8%B8%2018%201%EC%B8%B5%20102%ED%98%B8", "original": 38}];
+const STORAGE_KEY = "sales-route-v2-" + location.pathname + "-인천부평2동";
+
+function escapeHtml(s) {
+  return String(s || "").replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+function getDoneMap() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
+  catch(e) { return {}; }
+}
+
+function saveDoneMap(map) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(map));
+}
+
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg || "복사됨";
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 1300);
+}
+
+function copyText(text) {
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(text).then(() => showToast("주소 복사됨"));
+  } else {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+    showToast("주소 복사됨");
+  }
+}
+
+function render() {
+  const done = getDoneMap();
+  const list = document.getElementById("list");
+  list.innerHTML = STORES.map(s => {
+    const checked = !!done[s.order];
+    const phoneBtn = s.phone ? `<a class="btn call" href="tel:${escapeHtml(s.phone)}">전화</a>` : "";
+    return `
+      <section class="store ${checked ? "done" : ""}" id="store-${s.order}">
+        <div class="topline">
+          <div class="num">${s.order}</div>
+          <div>
+            <div class="name">${escapeHtml(s.name)}</div>
+            <div class="phone">${s.phone ? "☎ " + escapeHtml(s.phone) : "전화번호 없음"}</div>
+          </div>
+        </div>
+        <div class="addr">${escapeHtml(s.address)}</div>
+        <label class="done-row">
+          <input type="checkbox" ${checked ? "checked" : ""} onchange="toggleDone(${s.order}, this.checked)">
+          방문완료
+        </label>
+        <div class="btns">
+          <a class="btn naver" target="_blank" rel="noopener" href="${s.naver}">네이버지도</a>
+          <a class="btn kakao" target="_blank" rel="noopener" href="${s.kakao}">카카오맵</a>
+          <a class="btn drive full" target="_blank" rel="noopener" href="${s.kakaoNavi}">카카오네비/운전안내</a>
+          ${phoneBtn}
+          <button class="btn copy" onclick="copyText('${String(s.address).replace(/'/g, "\\'")}')">주소복사</button>
+        </div>
+        <div class="small-note">카카오네비 버튼은 카카오맵 검색/운전안내 진입용입니다.</div>
+      </section>
+    `;
+  }).join("");
+  updateProgress();
+}
+
+function toggleDone(order, val) {
+  const done = getDoneMap();
+  if (val) done[order] = true; else delete done[order];
+  saveDoneMap(done);
+  const card = document.getElementById("store-" + order);
+  if (card) card.classList.toggle("done", val);
+  updateProgress();
+}
+
+function updateProgress() {
+  const done = getDoneMap();
+  const count = Object.keys(done).length;
+  const total = STORES.length;
+  document.getElementById("doneCount").textContent = count;
+  document.getElementById("remainCount").textContent = Math.max(0, total - count);
+  document.getElementById("progressBar").style.width = total ? (count / total * 100) + "%" : "0%";
+}
+
+function scrollToNext() {
+  const done = getDoneMap();
+  const next = STORES.find(s => !done[s.order]);
+  if (next) {
+    document.getElementById("store-" + next.order).scrollIntoView({behavior:"smooth", block:"start"});
+  } else {
+    showToast("모두 방문완료");
+  }
+}
+
+function resetChecks() {
+  if (confirm("방문완료 체크를 모두 지울까요?")) {
+    localStorage.removeItem(STORAGE_KEY);
+    render();
+  }
+}
+
+render();
+</script>
+</body>
+</html>
